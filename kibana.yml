@@ -1,0 +1,7 @@
+elasticsearch:
+  hosts: "http://localhost:9200"
+  password: ''
+kibana:
+  defaultAppId: 'Akanksha'
+logging:
+  quiet: 'true'
