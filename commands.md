@@ -1,4 +1,21 @@
-## Basic elastic search commands 
+# Basic elastic search commands 
+
+Cluster     
+    |   
+Nodes   
+    |  
+Indexes     
+    |   
+Shards  
+    |   
+Document
+
+#How to write commands
+```
+METHOD <space> API_PATH  <space> API_REQUEST_JSON_PARAM
+``` 
+METHOD: [DELETE, HEAD, GET, PUT]        
+API_PATH: [cluster, nodes, indices, shards]
 
 
 # Check cluster Health
@@ -26,8 +43,12 @@ GET /_cat/shards?v
 ```
 
 
-# Create index with configuration
-# Use default ES setting, unless you have good reason.
+# Create index
+```
+PUT /pages
+```
+create index with configuration. Use default ES setting, unless you have good reason.
+```
 PUT /products 
 {
   "settings": {
@@ -35,61 +56,82 @@ PUT /products
     "number_of_replicas": 2
   }
 }
+```
 
+# Show index
+```
 GET /products/
+```
+
+# Remove a index
+```
+DELETE /pages
+```
 
 #Add documents to index
-
+```
 POST /products/_doc
 {
   "name": "Coffee maker",
   "price": 64,
   "in_stock": 10
 }
+```
 
 # Add document with specified id=100
+```
 PUT /products/_doc/100
 {
   "name": "Printer",
   "price": 49,
   "in_stock": 4
 }
+```
 
-
-# Retrive documents
+# Retrieve documents
+```
 GET /products/_doc/100
-
+```
 
 # Updating documents
+```
 POST /products/_update/100
 {
   "doc": {
     "in_stock": 3
   }
 }
-
+```
+Adding new attributes
+```
 POST /products/_update/100
 {
   "doc": {
     "tags": ["electronics"]
   }
 }
+```
 
 # Scripted updates
+```
 POST /products/_update/100
 {
   "script": {
     "source": "ctx._source.in_stock--"
   }
 }
+```
 
+```
 POST /products/_update/100
 {
   "script": {
     "source": "ctx._source.in_stock = 10"
   }
 }
+```
 
+```
 POST /products/_update/100
 {
   "script": {
@@ -99,7 +141,9 @@ POST /products/_update/100
     }
   }
 }
+```
 
+```
 POST /products/_update/100
 {
   "script": {
@@ -112,9 +156,11 @@ POST /products/_update/100
       """
   }
 }
+```
 
-
-# Upsert: Either run the script or Insert
+# Upsert
+Either run the script or Insert
+```
 POST /products/_update/101
 {
   "script": {
@@ -126,35 +172,23 @@ POST /products/_update/101
     "in_stock": 5
   }
 }
-
+```
 # Replace document
-# Tag is gone
+Tag is gone
+
+```
 PUT /products/_doc/100
 {
   "name": "Watch",
   "price": 49,
   "in_stock": 4
 }
-
+```
 
 #Delete a document
+```
 DELETE /products/_doc/101
+```
+```
 GET /products/_doc/101
-
-# Remove a index
-# [DELETE, HEAD, GET, PUT]
-PUT /pages
-DELETE /pages
-
-
-______
-GET /_cat/nodes?v
-
-GET /_nodes
-
-GET /_cat/indices?v
-
-
-GET /_cat/shards?v
-
-
+```
