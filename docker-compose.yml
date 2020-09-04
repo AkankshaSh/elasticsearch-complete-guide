@@ -10,6 +10,8 @@ services:
       - cluster.initial_master_nodes=es01,es02,es03
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+#      - path.data=./es01/data
+#      - path.logs=./es01/logs
     ulimits:
       memlock:
         soft: -1
